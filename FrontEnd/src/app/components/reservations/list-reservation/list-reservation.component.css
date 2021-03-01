@@ -1,0 +1,57 @@
+
+input[type = "radio"]
+{
+     display:none;
+}
+input[type = "radio"]:checked ~ label{    
+    color:orange;
+}
+label{
+    color:grey;
+    }
+
+label:hover, label:hover ~ label{
+    color:orange;
+}
+td{
+    width: 20%;   
+    text-align: center; 
+    vertical-align: middle;
+}
+.allwithe{
+    background: #f8f8f8;
+    margin-top: 2em;
+    padding: 1.5em;
+}
+
+.clasificacion{
+    direction: rtl;/* right to left */
+    unicode-bidi: bidi-override;/* bidi de bidireccional */
+}
+.newcolor {
+    background: #f8f8f8;
+    margin-top: 0;    
+    padding: 1em;     
+}
+.selectCpt{
+    height: 3em;
+}
+.tdranking{
+    width: 250px;
+    margin: 0 auto;
+    height: 50px;
+}
+.tdranking p{    
+        text-align: center;      
+}
+.tdranking label{
+    font-size: 20px;
+}
+
+.widthallwithe {
+    background: #f8f8f8;
+    margin-top: 0;
+    max-width: 100%;    
+}
+
+

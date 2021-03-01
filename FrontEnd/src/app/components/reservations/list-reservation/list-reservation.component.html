@@ -1,0 +1,123 @@
+<div class="container-fluid newcolor">
+    <div class="row">
+        <div class="offset-md-2 col-md-3" style="margin-left: 13%;">
+            <h2 style="color: #c72f34;">
+                Reservations List
+            </h2>
+        </div>
+        <div class="col-md-3">
+            <p class="text-justify">
+                Lorem ipsum dolor sit amet, consectetur adipicising
+                elit, sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua.
+            </p>
+        </div>
+        <div class="offset-md-1 col-md-3">
+            <a routerLink="/new" class="btn btn-lg btn-secondary"> CREATE RESERVATION</a>
+        </div>
+    </div>
+</div>
+<div class="container allwithe">
+    <form>
+        <div class="row" style="margin: 1em auto;">
+            <div class="form-group col-md-3">
+                <div class="input-group">
+                    <span id="contact-icon" class="input-group-text">
+                        <i class="fa fa-sort-amount-desc" aria-hidden="true"></i>
+                    </span>
+                    <select class="form-select selectCpt" [ngModel]="selectedFilter" name="selectedFilter"
+                        (change)="filtrar($event)" aria-label="Contact Type..." aria-describedby="contact-icon">
+                        <option value="By_Date_Ascending">By Date Ascending</option>
+                        <option value="By_Date_Descending">By Date Descending</option>
+                        <option value="By_Alphabetic_Ascending">By Alphabetic Ascending</option>
+                        <option value="By_Alphabetic_Descending">By Alphabetic Descending</option>
+                        <option value="By_Ranking">By Ranking</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-striped table-hover">
+                <tbody>
+                    <tr *ngFor="let list of reservlist">
+                        <input type="hidden" value="{{list.iD_Reservation}}" name="id_reserv" ngModel
+                            #id_reserv="ngModel" id="id_reserv">
+                        <td style="max-width: 5%;"><img src="/assets/img/reservationImg.png"
+                                style="width: 4em; height: 4em;">
+                        </td>
+                        <td style="text-align: justify;">
+                            <dl>
+
+                                <dt>
+                                    {{list.contactName}}
+
+                                </dt>
+                                <dd>
+                                    {{list.fecha_Reservacion}}
+                                </dd>
+                            </dl>
+                        </td>
+                        <td>
+                            <dl>
+                                <dt style="text-align: center;">
+                                    Ranking
+                                </dt>
+                                <dd class="tdranking">
+                                    <p class="clasificacion">
+                                        <input id="radio1 + {{list.iD_Reservation}}" type="radio"
+                                            name="ranking + {{list.iD_Reservation}}" value="5">
+                                        <label for="radio1 + {{list.iD_Reservation}}">★</label>
+                                        <input id="radio2 + {{list.iD_Reservation}}" type="radio"
+                                            name="ranking + {{list.iD_Reservation}}" value="4">
+                                        <label for="radio2 + {{list.iD_Reservation}}">★</label>
+                                        <input id="radio3 + {{list.iD_Reservation}}" type="radio"
+                                            name="ranking + {{list.iD_Reservation}}" value="3">
+                                        <label for="radio3 + {{list.iD_Reservation}}">★</label>
+                                        <input id="radio4 + {{list.iD_Reservation}}" type="radio"
+                                            name="ranking + {{list.iD_Reservation}}" value="2">
+                                        <label for="radio4 + {{list.iD_Reservation}}">★</label>
+                                        <input id="radio5 + {{list.iD_Reservation}}" type="radio"
+                                            name="ranking + {{list.iD_Reservation}}" value="1">
+                                        <label for="radio5 + {{list.iD_Reservation}}">★</label>
+                                    </p>
+                                </dd>
+                            </dl>
+                        </td>
+                        <td>
+                            <b>Add Favorite</b>
+                            <input id="favoriteinput" type="radio" name="radiofavorite + {{list.iD_Reservation}}"
+                                value="1">
+                            <label for="favoritelabel">
+                                <i class="fa fa-heartbeat text-black-50 text-danger fa-2x"
+                                    [class.text-black-50]="isfavorite(list.iD_Reservation)" aria-hidden="true"
+                                    id="{{list.iD_Reservation}}" (click)="onfavorite(list.iD_Reservation)"></i>
+                            </label>
+                        </td>
+                        <td>
+                            <a [routerLink]="['/edit',list.iD_Reservation,list.contactName]"
+                                class="btn btn-lg btn-secondary">EDIT</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <div class="row">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>

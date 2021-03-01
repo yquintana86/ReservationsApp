@@ -1,0 +1,11 @@
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\bin\Debug\netcoreapp2.2\ReservatiosDataAcces.deps.json
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\bin\Debug\netcoreapp2.2\ReservatiosDataAcces.dll
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\obj\Debug\netcoreapp2.2\ReservatiosDataAcces.csproj.CoreCompileInputs.cache
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\obj\Debug\netcoreapp2.2\ReservatiosDataAcces.AssemblyInfoInputs.cache
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\obj\Debug\netcoreapp2.2\ReservatiosDataAcces.AssemblyInfo.cs
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\bin\Debug\netcoreapp2.2\ReservatiosDataAcces.runtimeconfig.json
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\bin\Debug\netcoreapp2.2\ReservatiosDataAcces.runtimeconfig.dev.json
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\bin\Debug\netcoreapp2.2\ReservatiosDataAcces.pdb
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\obj\Debug\netcoreapp2.2\ReservatiosDataAcces.dll
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\obj\Debug\netcoreapp2.2\ReservatiosDataAcces.pdb
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\ReservatiosDataAcces\obj\Debug\netcoreapp2.2\ReservatiosDataAcces.csprojAssemblyReference.cache

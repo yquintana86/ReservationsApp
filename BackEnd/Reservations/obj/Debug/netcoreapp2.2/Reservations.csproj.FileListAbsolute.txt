@@ -1,0 +1,10 @@
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\bin\Debug\netcoreapp2.2\Reservations.deps.json
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\bin\Debug\netcoreapp2.2\Reservations.runtimeconfig.json
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\bin\Debug\netcoreapp2.2\Reservations.runtimeconfig.dev.json
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\bin\Debug\netcoreapp2.2\Reservations.dll
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\obj\Debug\netcoreapp2.2\Reservations.csproj.CoreCompileInputs.cache
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\obj\Debug\netcoreapp2.2\Reservations.RazorAssemblyInfo.cache
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\obj\Debug\netcoreapp2.2\Reservations.RazorAssemblyInfo.cs
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\obj\Debug\netcoreapp2.2\Reservations.AssemblyInfoInputs.cache
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\obj\Debug\netcoreapp2.2\Reservations.AssemblyInfo.cs
+D:\Trabajo\contratos\FreeLance\Canada\Reservation New\Reservations\Reservations\obj\Debug\netcoreapp2.2\Reservations.RazorTargetAssemblyInfo.cache

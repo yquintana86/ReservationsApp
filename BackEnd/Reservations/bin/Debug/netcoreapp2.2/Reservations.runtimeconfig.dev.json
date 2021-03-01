@@ -1,0 +1,9 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\YoelQC.DESKTOP-L9H3F0G\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\YoelQC.DESKTOP-L9H3F0G\\.nuget\\packages",
+      "C:\\Program Files (x86)\\dotnet\\sdk\\NuGetFallbackFolder"
+    ]
+  }
+}
