@@ -22,6 +22,7 @@ export class ListReservationComponent implements OnInit {
   public cantReserv: number;
   public selectedFilter: any;
   reserv: Reserv;
+  pag:number = 1;
 
 
   constructor(public resevservice: ReservationService, public favoriteservice: FavoriteService) {

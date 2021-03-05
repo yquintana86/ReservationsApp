@@ -22,6 +22,7 @@ import { UserService } from './services/user.service';
 import { ReservationService } from './services/reservation.service';
 import { FavoriteService } from './services/favorite.service';
 import { ContactTypeService } from './services/contact-type.service';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -42,7 +43,8 @@ import { ContactTypeService } from './services/contact-type.service';
     ToastrModule.forRoot(),
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
-    FormsModule 
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [UserService, ReservationService, FavoriteService, ContactTypeService],
   bootstrap: [AppComponent]
