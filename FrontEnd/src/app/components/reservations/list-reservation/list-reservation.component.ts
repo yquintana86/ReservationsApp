@@ -17,42 +17,37 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ListReservationComponent implements OnInit {
 
-  isfav_array: Array<number>;
-  reservlist: Array<Reserv>;
-  public id_reserv: any;
-  public cant_reserv: number;
-  public id = 0;
+  isFavArray: Array<number>;
+  reservList: Array<Reserv>;
+  public cantReserv: number;
   public selectedFilter: any;
+  reserv: Reserv;
 
 
   constructor(public resevservice: ReservationService, public favoriteservice: FavoriteService) {
-    this.reservlist = new Array<Reserv>();
-    this.isfav_array = new Array<number>();
-    this.cant_reserv = this.reservlist.length;
+    this.reservList = new Array<Reserv>();
+    this.isFavArray = new Array<number>();
+    this.cantReserv = this.reservList.length;
+    this.reserv = new Reserv('', new Date, '', 0, 1, 0);
   }
 
   ngOnInit() {
 
     this.resevservice.get_reservation().subscribe((data) => {
-      this.reservlist = data as Array<Reserv>;
+      this.reservList = data as Array<Reserv>;
     });
-    this.favoriteservice.getcookie();
-
   }
 
   onfavorite(idreserv: any) {
     this.changeclass(idreserv);
-    this.favoriteservice.setcookie(idreserv);
+    if(typeof(Storage) !== 'undefined')    
+      this.favoriteservice.setlocalstorage(idreserv);
+    
+    
   }
 
   isfavorite(id: any): boolean {
-    let is_fav = true;
-    let fav = this.favoriteservice.favorite;
-    if (fav != null) {
-      if (fav.length > 0 && fav.includes(id.toString()))
-        is_fav = false;
-    }
-    return is_fav;
+    return this.favoriteservice.getlocalstorag(id);
   }
 
   changeclass(idreserv: number) {
@@ -63,51 +58,78 @@ export class ListReservationComponent implements OnInit {
     switch (id.target.value) {
       case 'By_Date_Ascending':
         this.resevservice.get_asc_bydate().subscribe(data => {
-          this.reservlist.splice(0, this.reservlist.length);
+          this.reservList.splice(0, this.reservList.length);
           data.forEach(element => {
-            this.reservlist.push(element);
+            this.reservList.push(element);
           });
-          this.reservlist = data;
+          this.reservList = data;
         });
         break;
       case 'By_Date_Descending':
         this.resevservice.get_desc_bydate().subscribe(data => {
-          this.reservlist.splice(0, this.reservlist.length);
+          this.reservList.splice(0, this.reservList.length);
           data.forEach(element => {
-            this.reservlist.push(element);
+            this.reservList.push(element);
           });
-          this.reservlist = data;
+          this.reservList = data;
         });
         break;
       case 'By_Alphabetic_Ascending':
         this.resevservice.get_asc_byalphabetic().subscribe(data => {
-          this.reservlist.splice(0, this.reservlist.length);
+          this.reservList.splice(0, this.reservList.length);
           data.forEach(element => {
-            this.reservlist.push(element);
+            this.reservList.push(element);
           });
-          this.reservlist = data;
+          this.reservList = data;
         });
         break;
       case 'By_Alphabetic_Descending':
         this.resevservice.get_desc_byalphabetic().subscribe(data => {
-          this.reservlist.splice(0, this.reservlist.length);
+          this.reservList.splice(0, this.reservList.length);
           data.forEach(element => {
-            this.reservlist.push(element);
+            this.reservList.push(element);
           });
-          this.reservlist = data;
+          this.reservList = data;
         });
         break;
       case 'By_Ranking':
         this.resevservice.get_by_ranking().subscribe(data => {
-          this.reservlist.splice(0, this.reservlist.length);
+          this.reservList.splice(0, this.reservList.length);
           data.forEach(element => {
-            this.reservlist.push(element);
+            this.reservList.push(element);
           });
-          this.reservlist = data;
+          this.reservList = data;
         });
         break;
     }
   }
 
+  vote(id: any, clasification: number): void {
+
+    this.resevservice.get_reservationById(id).subscribe(data => {
+      let info = data.reservationInfo;
+      let date = data.reservationDate;
+
+      if (data.votings == 0) {
+        this.reserv = new Reserv(data.reservationInfo, data.reservationDate, data.contactName, clasification, 1, data.iD_Reservation);
+        this.resevservice.update_reservation(this.reserv).subscribe(data => { });
+      }
+      else {
+        this.reserv = new Reserv(data.reservationInfo, data.reservationDate, data.contactName, (clasification + data.votings), ++data.voters, data.iD_Reservation);
+        this.resevservice.update_reservation(this.reserv).subscribe(data => { });
+      }
+    });
+  }
+  isyellow(id: any, place: number): boolean {
+    let yellow: boolean = false;
+    let idAsNumber: number = Number(id);
+    this.reservList.forEach(element => {
+      if (element.iD_Reservation === idAsNumber) {
+        if (element.votings / element.voters >= place)
+          yellow = true;
+      }
+    });
+    return yellow;
+  }
 }
 

@@ -18,14 +18,9 @@ export class EditReservationComponent implements OnInit {
 
   bsValue: any;
   public newReservUserForm: FormGroup;
-  reserv: any = '';
-  user: any = '';
   public contactTypeArray: Array<ContactType>;
   public newReservUserBuilder: FormBuilder = new FormBuilder;
-  url: any = '';
-  id: any = '';
-  contactname: any = '';
-  id_reserv: any = '';
+  idReserv: any = '';
   voters: any = '';
   votings: any = '';
 
@@ -75,7 +70,7 @@ export class EditReservationComponent implements OnInit {
   loadReserv(id: any) {
     this.reservationservice.get_reservationById(id).subscribe(data => {
       console.log(data);
-      this.id_reserv = data.iD_Reservation;
+      this.idReserv = data.iD_Reservation;
       this.voters = data.voters;
       this.votings = data.votings;
       this.newReservUserForm.controls.reservationInfo.setValue(data.reservationInfo);
@@ -88,14 +83,15 @@ export class EditReservationComponent implements OnInit {
 
   update_reserv(): void {
     const reserv: Reserv = {
-      iD_Reservation: this.id_reserv,
-      fecha_Reservacion: new Date(),
+      iD_Reservation: this.idReserv,
+      reservationDate: new Date(),
       contactName: this.newReservUserForm.get('contactName')?.value,
       reservationInfo: this.newReservUserForm.get('reservationInfo')?.value,
       voters: this.voters,
       votings: this.votings
     }
     this.reservationservice.update_reservation(reserv).subscribe(data => {
+     this.toastr.success('Reservation Updated', 'The reservation was successfully updated');
     });
   }
 
@@ -107,8 +103,8 @@ export class EditReservationComponent implements OnInit {
       birthDate: this.newReservUserForm.get('birthDate')?.value
     }
     this.userservice.updateuser(user).subscribe(data => {
-      this.toastr.success('Reservation Updated', 'The reservation was successfully updated');
-    })
+      
+    });
   }
 
 }

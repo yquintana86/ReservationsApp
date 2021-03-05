@@ -18,8 +18,6 @@ export class NewReservationComponent implements OnInit {
 
   public bsValue = new Date();
   public newReservUserForm: FormGroup;
-  public reserv: any;
-  public user: any;
   public contactTypeArray: Array<ContactType>;
   public newReservUserBuilder: FormBuilder = new FormBuilder;
 
@@ -52,10 +50,10 @@ export class NewReservationComponent implements OnInit {
 
   }
 
-  saveReservation(): void {
+saveReservation(): void {
 
     this.userservice.getUsersByContactName(this.newReservUserForm.get('contactName')?.value).subscribe(data => {
-      if (data != undefined) {
+      if (data) {
         this.update_user();
         this.save_reserv();
       }
@@ -68,7 +66,7 @@ export class NewReservationComponent implements OnInit {
 
   save_reserv(): void {
     const reserv: Reserv = {
-      fecha_Reservacion: new Date(),
+      reservationDate: new Date(),
       contactName: this.newReservUserForm.get('contactName')?.value,
       reservationInfo: this.newReservUserForm.get('reservationInfo')?.value,
       voters: 1,
@@ -106,18 +104,19 @@ export class NewReservationComponent implements OnInit {
     let conctact: string = this.newReservUserForm.get('contactName')?.value;
     if (conctact.length > 3) {
       this.userservice.getUsersByContactName(conctact).subscribe(data => {
-        if (data != undefined) {
+        if (data) {
           this.newReservUserForm.controls.contactTypeName.setValue(data.contactTypeName.toString());
           this.newReservUserForm.controls.phoneNumber.setValue(new Number(data.phoneNumber));
           this.newReservUserForm.controls.birthDate.setValue(new Date(data.birthDate.toString()));
         }
-      });
-    }
-    else {
-      this.newReservUserForm.controls.phoneNumber.setValue('');
-      this.newReservUserForm.controls.birthDate.setValue(new Date());
+        else {
+          this.newReservUserForm.controls.phoneNumber.setValue('');
+          this.newReservUserForm.controls.birthDate.setValue(new Date());
+        }
+      });     
+    }    
     }
   }
-}
+
 
 

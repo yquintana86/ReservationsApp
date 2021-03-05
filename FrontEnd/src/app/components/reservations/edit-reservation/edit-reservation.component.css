@@ -20,6 +20,18 @@ input.ng-touched.ng-valid{
     border-color: #28a745;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 select.ng-touched.ng-invalid{
     border-color: #dc3545;    
 }
@@ -27,3 +39,4 @@ select.ng-touched.ng-invalid{
 select.ng-touched.ng-valid{
     border-color: #28a745;
 }
+
