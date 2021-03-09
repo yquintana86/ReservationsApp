@@ -10,48 +10,83 @@ using ReservatiosDataAcces.Models;
 
 namespace ReservationsBackEnd.Models
 {
-    public class SqlAppRepository : IReservationRepository, IUserRepository, IContact_Type
+    public class SqlUserReservationRepository : IUserReservationRepository
     {
         private readonly AppDbContext _context;
 
-        public SqlAppRepository(AppDbContext Context)
+        public SqlUserReservationRepository(AppDbContext Context)
         {
             this._context = Context;
         }
 
 
-        public async Task<IEnumerable<Reservation>> GetReservations()
+        public async Task<IEnumerable<Reservation>> GetReservations()        //Return all the reservations 
         {
-            return await _context.Reservations.ToListAsync();
+            try
+            {
+                return await _context.Reservations.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
+
         }
 
 
-        public async Task<Reservation> GetReservation(int id)
+        public async Task<Reservation> GetReservation(int id)               //Return one the reservations by a given id
         {
-            return await _context.Reservations.FindAsync(id);
+            try
+            {
+                return await _context.Reservations.FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
         }
 
-        public Reservation Add(Reservation reservation)
+        public void Add(Reservation reservation)
         {
-            _context.Reservations.Add(reservation);
-            Thread.Sleep(500);
-            _context.SaveChanges();
-            return reservation;
+            try
+            {
+                _context.Reservations.Add(reservation);
+                Thread.Sleep(500);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
+
         }
 
-        public async Task<Reservation> Update(Reservation reservation)
+        public void Update(Reservation reservation)      //Update one reservations 
         {
-            var reserv = _context.Reservations.Attach(reservation);
-            reserv.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return reservation;
+            try
+            {
+                _context.Entry(reservation).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
         }
 
-        public bool ReservationExists(int id)
+        public bool ReservationExists(int id)                               //Look for if a reservation exist by its id 
         {
-            return _context.Reservations.Any(e => e.ID_Reservation == id);
+            try
+            {
+                return _context.Reservations.Any(e => e.IDReservation == id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
         }
-        public async Task<IEnumerable<Reservation>> GetByDateAsc()
+
+        public async Task<IEnumerable<Reservation>> GetByDateAsc()       //Excecute the storage procedure "SP_ReservByDateASC" in de DB and return all the reservations ordered by date ascending
         {
             List<Reservation> reservations = new List<Reservation>();
             try
@@ -68,12 +103,12 @@ namespace ReservationsBackEnd.Models
                         {
                             Reservation reserv = new Reservation
                             {
-                                ID_Reservation = Convert.ToInt32(reader["ID_Reservation"].ToString()),
+                                IDReservation = Convert.ToInt32(reader["IDReservation"].ToString()),
                                 ContactName = reader["ContactName"].ToString(),
-                                Fecha_Reservacion = Convert.ToDateTime(reader["Fecha_Reservacion"].ToString()),
+                                ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString()),
                                 ReservationInfo = reader["ReservationInfo"].ToString(),
                                 Voters = Convert.ToInt32(reader["voters"].ToString()),
-                                Votings = Convert.ToInt32(reader["votings"].ToString())
+                                Votings = Convert.ToInt32(reader["votings"].ToString()),
                             };
                             reservations.Add(reserv);
                         }
@@ -87,7 +122,7 @@ namespace ReservationsBackEnd.Models
             }
             return reservations;
         }
-        public async Task<IEnumerable<Reservation>> GetByDateDesc()
+        public async Task<IEnumerable<Reservation>> GetByDateDesc()         //Excecute the storage procedure "SP_ReservByDateDESC" in de DB and return all the reservations ordered by date descending
         {
             List<Reservation> reservations = new List<Reservation>();
             try
@@ -104,12 +139,12 @@ namespace ReservationsBackEnd.Models
                         {
                             Reservation reserv = new Reservation
                             {
-                                ID_Reservation = Convert.ToInt32(reader["ID_Reservation"].ToString()),
+                                IDReservation = Convert.ToInt32(reader["IDReservation"].ToString()),
                                 ContactName = reader["ContactName"].ToString(),
-                                Fecha_Reservacion = Convert.ToDateTime(reader["Fecha_Reservacion"].ToString()),
+                                ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString()),
                                 ReservationInfo = reader["ReservationInfo"].ToString(),
                                 Voters = Convert.ToInt32(reader["voters"].ToString()),
-                                Votings = Convert.ToInt32(reader["votings"].ToString())
+                                Votings = Convert.ToInt32(reader["votings"].ToString()),
                             };
                             reservations.Add(reserv);
                         }
@@ -123,7 +158,7 @@ namespace ReservationsBackEnd.Models
             }
             return reservations;
         }
-        public async Task<IEnumerable<Reservation>> GetByAlphabeticAsc()
+        public async Task<IEnumerable<Reservation>> GetByAlphabeticAsc()    //Excecute the storage procedure "SP_ReservByAlphabeticASC" in de DB and return all the reservations ordered alphabetically ascending
         {
             List<Reservation> reservations = new List<Reservation>();
             try
@@ -140,12 +175,12 @@ namespace ReservationsBackEnd.Models
                         {
                             Reservation reserv = new Reservation
                             {
-                                ID_Reservation = Convert.ToInt32(reader["ID_Reservation"].ToString()),
+                                IDReservation = Convert.ToInt32(reader["IDReservation"].ToString()),
                                 ContactName = reader["ContactName"].ToString(),
-                                Fecha_Reservacion = Convert.ToDateTime(reader["Fecha_Reservacion"].ToString()),
+                                ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString()),
                                 ReservationInfo = reader["ReservationInfo"].ToString(),
                                 Voters = Convert.ToInt32(reader["voters"].ToString()),
-                                Votings = Convert.ToInt32(reader["votings"].ToString())
+                                Votings = Convert.ToInt32(reader["votings"].ToString()),
                             };
                             reservations.Add(reserv);
                         }
@@ -159,7 +194,7 @@ namespace ReservationsBackEnd.Models
             }
             return reservations;
         }
-        public async Task<IEnumerable<Reservation>> GetByAlphabeticDesc()
+        public async Task<IEnumerable<Reservation>> GetByAlphabeticDesc()   //Excecute the storage procedure "SP_ReservByAlphabeticDESC" in de DB and return all the reservations ordered alphabetically desscending
         {
             List<Reservation> reservations = new List<Reservation>();
             try
@@ -177,12 +212,12 @@ namespace ReservationsBackEnd.Models
                         {
                             Reservation reserv = new Reservation
                             {
-                                ID_Reservation = Convert.ToInt32(reader["ID_Reservation"].ToString()),
+                                IDReservation = Convert.ToInt32(reader["IDReservation"].ToString()),
                                 ContactName = reader["ContactName"].ToString(),
-                                Fecha_Reservacion = Convert.ToDateTime(reader["Fecha_Reservacion"].ToString()),
+                                ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString()),
                                 ReservationInfo = reader["ReservationInfo"].ToString(),
                                 Voters = Convert.ToInt32(reader["voters"].ToString()),
-                                Votings = Convert.ToInt32(reader["votings"].ToString())
+                                Votings = Convert.ToInt32(reader["votings"].ToString()),
                             };
                             reservations.Add(reserv);
                         }
@@ -197,7 +232,7 @@ namespace ReservationsBackEnd.Models
             return reservations;
         }
 
-        public async Task<IEnumerable<Reservation>> GetByRanking()
+        public async Task<IEnumerable<Reservation>> GetByRanking()          //Excecute the storage procedure "SP_ByRanking" in de DB and return all the reservations ordered by Ranking
         {
             List<Reservation> reservations = new List<Reservation>();
             try
@@ -214,12 +249,12 @@ namespace ReservationsBackEnd.Models
                         {
                             Reservation reserv = new Reservation
                             {
-                                ID_Reservation = Convert.ToInt32(reader["ID_Reservation"].ToString()),
+                                IDReservation = Convert.ToInt32(reader["IDReservation"].ToString()),
                                 ContactName = reader["ContactName"].ToString(),
-                                Fecha_Reservacion = Convert.ToDateTime(reader["Fecha_Reservacion"].ToString()),
+                                ReservationDate = Convert.ToDateTime(reader["ReservationDate"].ToString()),
                                 ReservationInfo = reader["ReservationInfo"].ToString(),
                                 Voters = Convert.ToInt32(reader["voters"].ToString()),
-                                Votings = Convert.ToInt32(reader["votings"].ToString())
+                                Votings = Convert.ToInt32(reader["votings"].ToString()),
                             };
                             reservations.Add(reserv);
                         }
@@ -233,35 +268,69 @@ namespace ReservationsBackEnd.Models
             }
             return reservations;
         }
-        public async Task<IEnumerable<User>> GetUsers()
+
+        public async Task<IEnumerable<User>> GetUsers()                             //Return all the users in de DB
         {
-            return await _context.Users.ToListAsync();
+            try
+            {
+                return await _context.Users.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
         }
 
-        public async Task<User> GetUser(string contact_name)
+        public async Task<User> GetUser(string contactName)                        //Return the user in de DB with the given contactName
         {
-            return await _context.Users.FindAsync(contact_name);
+            try
+            {
+                return await _context.Users.FindAsync(contactName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
         }
 
-        public User Add(User user)
+        public void Add(User user)                                              //Insert the user in de DB
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            return user;
+            try
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
         }
 
-        public async Task<User> Update(User user)
+        public void Update(User user)                                     //Update the given user in de DB 
         {
-            var userstatus = _context.Users.Attach(user);
-            userstatus.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return user;
+            try
+            {
+                _context.Entry(user).State = EntityState.Modified;
+                 _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
+
         }
-        public bool UserExists(string contact_name)
+        public bool UserExists(string contact_name)                             //Return if a user exist in the DB
         {
-            return _context.Users.Any(e => e.ContactName == contact_name);
+            try
+            {
+                return _context.Users.Any(e => e.ContactName == contact_name);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("", ex);
+            }
         }
-        public async Task<IEnumerable<ContactType>> GetContact_Type()
+        public async Task<IEnumerable<ContactType>> GetContactType()           //Return all the ContactType in the DB
         {
             List<ContactType> contactType = new List<ContactType>();
             try

@@ -10,8 +10,8 @@ using ReservationDataAcces.Models;
 namespace ReservatiosDataAcces.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210228125738_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210309022324_InitialMigration1")]
+    partial class InitialMigration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace ReservatiosDataAcces.Migrations
 
             modelBuilder.Entity("ReservationDataAcces.Models.Reservation", b =>
                 {
-                    b.Property<int>("ID_Reservation")
+                    b.Property<int>("IDReservation")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -31,7 +31,7 @@ namespace ReservatiosDataAcces.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(8)");
 
-                    b.Property<DateTime>("Fecha_Reservacion");
+                    b.Property<DateTime>("ReservationDate");
 
                     b.Property<string>("ReservationInfo")
                         .IsRequired();
@@ -40,7 +40,7 @@ namespace ReservatiosDataAcces.Migrations
 
                     b.Property<int>("Votings");
 
-                    b.HasKey("ID_Reservation");
+                    b.HasKey("IDReservation");
 
                     b.HasIndex("ContactName");
 

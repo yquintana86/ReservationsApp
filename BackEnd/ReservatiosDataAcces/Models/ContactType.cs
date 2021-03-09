@@ -8,6 +8,8 @@ namespace ReservatiosDataAcces.Models
 {
     public class ContactType
     {
+        //ContactType Properties
+
         [Key]
         public string ContactTypeName{ get; set; }
         public string Decription { get; set; }        

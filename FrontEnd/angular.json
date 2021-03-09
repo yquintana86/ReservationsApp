@@ -5,6 +5,12 @@
   "projects": {
     "ReservationFrontEnd": {
       "projectType": "application",
+      "i18n": {
+        "locales": {
+          "es": "src/locale/messages.es.xlf",
+          "en": "src/locale/messages.en.xlf"
+        }
+      },
       "schematics": {
         "@schematics/angular:application": {
           "strict": true
@@ -25,7 +31,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {"glob": "**/*", "input": "node_modules/tinymce", "output": "/tinymce/"}
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -37,7 +44,8 @@
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "node_modules/datatables.net/js/jquery.dataTables.js"
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/tinymce/tinymce.min.js"
             ]
           },
           "configurations": {
@@ -67,6 +75,12 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            "es": {
+              "localize": ["es"]
+            },
+            "en": {
+              "localize": ["en"]
             }
           }
         },
@@ -78,6 +92,12 @@
           "configurations": {
             "production": {
               "browserTarget": "ReservationFrontEnd:build:production"
+            },
+            "es": {
+              "browserTarget": "ReservationFrontEnd:build:es"
+            },
+            "en": {
+              "browserTarget": "ReservationFrontEnd:build:en"
             }
           }
         },

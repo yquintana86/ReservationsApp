@@ -1,7 +1,7 @@
 <div class="container-fluid newcolor">
     <div class="row">
         <div class="offset-md-2 col-md-3" style="margin-left: 13%;">
-            <h2 style="color: #c72f34;">
+            <h2 i18n style="color: #c72f34;">
                 Reservations List
             </h2>
         </div>
@@ -13,12 +13,11 @@
             </p>
         </div>
         <div class="offset-md-1 col-md-3">
-            <a routerLink="/new" class="btn btn-lg btn-secondary"> CREATE RESERVATION</a>
+            <a i18n routerLink="/new" class="btn btn-lg btn-secondary"> CREATE RESERVATION</a>
         </div>
     </div>
 </div>
-<div class="container allwithe">  
-    <form>  
+<div class="container allwithe">       
         <div class="row" style="margin: 1em auto;">            
             <div class="form-group col-md-3">
                 <div class="input-group">
@@ -27,11 +26,11 @@
                     </span>
                     <select class="form-select selectCpt" [ngModel]="selectedFilter" name="selectedFilter"
                         (change)="filtrar($event)" aria-label="Contact Type..." aria-describedby="contact-icon">
-                        <option value="By_Date_Ascending">By Date Ascending</option>
-                        <option value="By_Date_Descending">By Date Descending</option>
-                        <option value="By_Alphabetic_Ascending">By Alphabetic Ascending</option>
-                        <option value="By_Alphabetic_Descending">By Alphabetic Descending</option>
-                        <option value="By_Ranking">By Ranking</option>
+                        <option i18n value="By_Date_Ascending">By Date Ascending</option>
+                        <option i18n value="By_Date_Descending">By Date Descending</option>
+                        <option i18n value="By_Alphabetic_Ascending">By Alphabetic Ascending</option>
+                        <option i18n value="By_Alphabetic_Descending">By Alphabetic Descending</option>
+                        <option i18n value="By_Ranking">By Ranking</option>
                     </select>
                 </div>
             </div>
@@ -40,11 +39,11 @@
             <table class="table table-striped table-hover">
                 <tbody>
                     <tr *ngFor="let list of reservList | paginate: {itemsPerPage:10,currentPage:pag};">
-                        <input type="hidden" value="{{list.iD_Reservation}}" name="id_reserv" ngModel
-                            #id_reserv="ngModel" id="id_reserv">
+                        <input type="hidden" value="{{list.idReservation}}" name="idReserv" ngModel
+                            #idReserv="ngModel" id="idReserv">
                         <td class="col-xs-1 col-md-1"><img src="/assets/img/reservationImg.png" style="width: 4em; height: 4em;">
                         </td>
-                        <td class="col-xs-2 col-md-3">
+                        <td class="col-xs-2 col-md-3" style="text-align:left">
                             <dl>
 
                                 <dt>
@@ -58,48 +57,48 @@
                         </td>
                         <td class="col-xs-2 col-md-3">
                             <dl>
-                                <dt>
+                                <dt i18n>
                                     Ranking
                                 </dt>
                                 <dd class="tdranking">
                                     <p class="clasificacion">
-                                        <input id="radio1-{{list.iD_Reservation}}" type="radio" [checked] = 'isyellow(list.iD_Reservation,5)'
-                                            name="ranking-{{list.iD_Reservation}}" value="5" (click)="vote(list.iD_Reservation, 5)">
-                                        <label for="radio1-{{list.iD_Reservation}}">★</label>
-                                        <input id="radio2-{{list.iD_Reservation}}" type="radio" [checked] = 'isyellow(list.iD_Reservation,4)'
-                                            name="ranking-{{list.iD_Reservation}}" value="4" (click)="vote(list.iD_Reservation, 4)">
-                                        <label for="radio2{{list.iD_Reservation}}">★</label>
-                                        <input id="radio3{{list.iD_Reservation}}" type="radio" [checked] = 'isyellow(list.iD_Reservation,3)'
-                                            name="ranking{{list.iD_Reservation}}" value="3" (click)="vote(list.iD_Reservation, 3)">
-                                        <label for="radio3{{list.iD_Reservation}}">★</label>
-                                        <input id="radio4{{list.iD_Reservation}}" type="radio" [checked] = 'isyellow(list.iD_Reservation,2)'
-                                            name="ranking{{list.iD_Reservation}}" value="2" (click)="vote(list.iD_Reservation, 2)">
-                                        <label for="radio4{{list.iD_Reservation}}">★</label>
-                                        <input id="radio5{{list.iD_Reservation}}" type="radio" [checked] = 'isyellow(list.iD_Reservation,1)'
-                                            name="ranking{{list.iD_Reservation}}" value="1" (click)="vote(list.iD_Reservation, 1)">
-                                        <label for="radio5{{list.iD_Reservation}}">★</label>
+                                        <input id="radio1-{{list.idReservation}}" type="radio" [checked] = 'isyellow(list.idReservation,5)'
+                                            name="ranking-{{list.idReservation}}" value="5" (click)="vote(list.idReservation, 5)">
+                                        <label for="radio1-{{list.idReservation}}">★</label>
+                                        <input id="radio2-{{list.idReservation}}" type="radio" [checked] = 'isyellow(list.idReservation,4)'
+                                            name="ranking-{{list.idReservation}}" value="4" (click)="vote(list.idReservation, 4)">
+                                        <label for="radio2-{{list.idReservation}}">★</label>
+                                        <input id="radio3-{{list.idReservation}}" type="radio" [checked] = 'isyellow(list.idReservation,3)'
+                                            name="ranking-{{list.idReservation}}" value="3" (click)="vote(list.idReservation, 3)">
+                                        <label for="radio3-{{list.idReservation}}">★</label>
+                                        <input id="radio4-{{list.idReservation}}" type="radio" [checked] = 'isyellow(list.idReservation,2)'
+                                            name="ranking-{{list.idReservation}}" value="2" (click)="vote(list.idReservation, 2)">
+                                        <label for="radio4-{{list.idReservation}}">★</label>
+                                        <input id="radio5-{{list.idReservation}}" type="radio" [checked] = 'isyellow(list.idReservation,1)'
+                                            name="ranking-{{list.idReservation}}" value="1" (click)="vote(list.idReservation, 1)">
+                                        <label for="radio5-{{list.idReservation}}">★</label>
                                     </p>
                                 </dd>
                             </dl>
                         </td>
                         <td class="col-xs-2 col-md-3">
-                            <b>Add Favorite</b>
-                            <input id="favoriteinput" type="radio" name="radiofavorite + {{list.iD_Reservation}}"
+                            <b i18n >Add Favorite</b>
+                            <input id="favoriteinput" type="radio" name="radiofavorite + {{list.idReservation}}"
                                 value="1">
                             <label for="favoritelabel">
-                                <i class="fa fa-heartbeat text-black-50 text-danger fa-2x"
-                                    [class.text-black-50]="isfavorite(list.iD_Reservation)" aria-hidden="true"
-                                    id="{{list.iD_Reservation}}" (click)="onfavorite(list.iD_Reservation)"></i>
+                                <i class="fa fa-heartbeat text-danger fa-2x"
+                                    [class.text-black-50]="isfavorite(list.idReservation)" aria-hidden="true"
+                                    id="{{list.idReservation}}" (click)="onfavorite(list.idReservation)"></i>
                             </label>
                         </td>
                         <td class="col-xs-1 col-md-2">
-                            <a [routerLink]="['/edit',list.iD_Reservation,list.contactName]"
+                            <a i18n [routerLink]="['/edit',list.idReservation,list.contactName]"
                                 class="btn btn-lg btn-secondary ">EDIT</a>
                         </td>
                     </tr>
-                </tbody>                
-                    <pagination-controls (pageChange)="pag = $event" style="display: ruby-text; margin: 1em;"></pagination-controls>                
-            </table>                
+                </tbody>  
+            </table>       
+            <pagination-controls class="col-12 col-md-6 col-lg-4" (pageChange)="pag = $event"></pagination-controls>           
         </div>
-    </form>
+    
    

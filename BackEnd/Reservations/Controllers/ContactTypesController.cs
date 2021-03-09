@@ -15,19 +15,27 @@ namespace ReservationsBackEnd.Controllers
     [ApiController]
     public class ContactTypesController : ControllerBase
     {
-        private readonly IContact_Type _contact_Type;
+        private readonly IUserReservationRepository _apprepository;                //Dependency Injection, it uses an instance of SqlAppRepository
 
-        public ContactTypesController(IContact_Type contact_Type)
+        public ContactTypesController(IUserReservationRepository apprepository)
         {
-            _contact_Type = contact_Type;
+            _apprepository = apprepository;
         }
 
         // GET: api/ContactTypes
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ContactType>), 200)]
         public ActionResult<IEnumerable<ContactType>> GetContactTypes()
-        {
-            return _contact_Type.GetContact_Type().Result.ToList();
+        {            
+            try
+            {
+                return _apprepository.GetContactType().Result.ToList();
+            }
+            catch(Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);               
+            }
         }
 
     }

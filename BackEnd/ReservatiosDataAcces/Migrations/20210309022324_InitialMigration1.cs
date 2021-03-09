@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ReservatiosDataAcces.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,17 +44,17 @@ namespace ReservatiosDataAcces.Migrations
                 name: "Reservations",
                 columns: table => new
                 {
-                    ID_Reservation = table.Column<int>(nullable: false)
+                    IDReservation = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ReservationInfo = table.Column<string>(nullable: false),
-                    Fecha_Reservacion = table.Column<DateTime>(nullable: false),
+                    ReservationDate = table.Column<DateTime>(nullable: false),
                     Votings = table.Column<int>(nullable: false),
                     Voters = table.Column<int>(nullable: false),
                     ContactName = table.Column<string>(type: "varchar(8)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservations", x => x.ID_Reservation);
+                    table.PrimaryKey("PK_Reservations", x => x.IDReservation);
                     table.ForeignKey(
                         name: "FK_Reservations_Users_ContactName",
                         column: x => x.ContactName,

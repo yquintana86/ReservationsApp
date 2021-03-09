@@ -32,10 +32,7 @@ namespace Reservations
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("ReservationDBConnection"), b => b.MigrationsAssembly("ReservatiosDataAcces")));
             services.AddCors(options => options.AddPolicy("AllowWebApp", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
-            services.AddScoped<IReservationRepository, SqlAppRepository>();
-            services.AddScoped<IUserRepository, SqlAppRepository>();
-            services.AddScoped<IContact_Type, SqlAppRepository>();
-
+            services.AddScoped<IUserReservationRepository, SqlUserReservationRepository>();
         }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

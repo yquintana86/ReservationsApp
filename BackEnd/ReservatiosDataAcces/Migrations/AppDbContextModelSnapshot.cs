@@ -21,7 +21,7 @@ namespace ReservatiosDataAcces.Migrations
 
             modelBuilder.Entity("ReservationDataAcces.Models.Reservation", b =>
                 {
-                    b.Property<int>("ID_Reservation")
+                    b.Property<int>("IDReservation")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,7 +29,7 @@ namespace ReservatiosDataAcces.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(8)");
 
-                    b.Property<DateTime>("Fecha_Reservacion");
+                    b.Property<DateTime>("ReservationDate");
 
                     b.Property<string>("ReservationInfo")
                         .IsRequired();
@@ -38,7 +38,7 @@ namespace ReservatiosDataAcces.Migrations
 
                     b.Property<int>("Votings");
 
-                    b.HasKey("ID_Reservation");
+                    b.HasKey("IDReservation");
 
                     b.HasIndex("ContactName");
 

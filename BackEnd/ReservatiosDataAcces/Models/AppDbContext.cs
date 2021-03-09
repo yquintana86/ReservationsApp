@@ -20,8 +20,7 @@ namespace ReservationDataAcces.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //modelBuilder.Entity<User>().HasMany( r => r.).
-
+            //Filling the ContactType database table with three entries 
 
             modelBuilder.Entity<ContactType>().HasData(
                 new ContactType

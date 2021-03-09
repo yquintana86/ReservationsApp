@@ -1,13 +1,8 @@
-import { stringify } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControlName, FormGroup, NgForm } from '@angular/forms';
-import { isUndefined } from 'ngx-bootstrap/chronos/utils/type-checks';
-import { Observable } from 'rxjs/internal/Observable';
 import { Reserv } from 'src/app/models/reserv';
-import { User } from 'src/app/models/user';
 import { FavoriteService } from 'src/app/services/favorite.service';
 import { ReservationService } from 'src/app/services/reservation.service';
-import { UserService } from 'src/app/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -21,11 +16,12 @@ export class ListReservationComponent implements OnInit {
   reservList: Array<Reserv>;
   public cantReserv: number;
   public selectedFilter: any;
+  idReserv: any;
   reserv: Reserv;
   pag:number = 1;
 
 
-  constructor(public resevservice: ReservationService, public favoriteservice: FavoriteService) {
+  constructor(public resevservice: ReservationService, public favoriteservice: FavoriteService,private toastr: ToastrService) {
     this.reservList = new Array<Reserv>();
     this.isFavArray = new Array<number>();
     this.cantReserv = this.reservList.length;
@@ -34,9 +30,15 @@ export class ListReservationComponent implements OnInit {
 
   ngOnInit() {
 
-    this.resevservice.get_reservation().subscribe((data) => {
-      this.reservList = data as Array<Reserv>;
-    });
+    try{
+      this.resevservice.get_reservation().subscribe((data) => {
+        this.reservList = data as Array<Reserv>;
+      });
+    }
+    catch(e)
+    {
+      this.toastr.error(e.message);
+    }
   }
 
   onfavorite(idreserv: any) {
@@ -48,7 +50,7 @@ export class ListReservationComponent implements OnInit {
   }
 
   isfavorite(id: any): boolean {
-    return this.favoriteservice.getlocalstorag(id);
+    return this.favoriteservice.getlocalstorage(id);
   }
 
   changeclass(idreserv: number) {
@@ -56,77 +58,89 @@ export class ListReservationComponent implements OnInit {
   }
 
   filtrar(id: any): void {
-    switch (id.target.value) {
-      case 'By_Date_Ascending':
-        this.resevservice.get_asc_bydate().subscribe(data => {
-          this.reservList.splice(0, this.reservList.length);
-          data.forEach(element => {
-            this.reservList.push(element);
+    try{
+      switch (id.target.value) {
+        case 'By_Date_Ascending':
+          this.resevservice.get_asc_bydate().subscribe(data => {
+            this.reservList.splice(0, this.reservList.length);
+            data.forEach(element => {
+              this.reservList.push(element);
+            });
+            this.reservList = data;
           });
-          this.reservList = data;
-        });
-        break;
-      case 'By_Date_Descending':
-        this.resevservice.get_desc_bydate().subscribe(data => {
-          this.reservList.splice(0, this.reservList.length);
-          data.forEach(element => {
-            this.reservList.push(element);
+          break;
+        case 'By_Date_Descending':
+          this.resevservice.get_desc_bydate().subscribe(data => {
+            this.reservList.splice(0, this.reservList.length);
+            data.forEach(element => {
+              this.reservList.push(element);
+            });
+            this.reservList = data;
           });
-          this.reservList = data;
-        });
-        break;
-      case 'By_Alphabetic_Ascending':
-        this.resevservice.get_asc_byalphabetic().subscribe(data => {
-          this.reservList.splice(0, this.reservList.length);
-          data.forEach(element => {
-            this.reservList.push(element);
+          break;
+        case 'By_Alphabetic_Ascending':
+          this.resevservice.get_asc_byalphabetic().subscribe(data => {
+            this.reservList.splice(0, this.reservList.length);
+            data.forEach(element => {
+              this.reservList.push(element);
+            });
+            this.reservList = data;
           });
-          this.reservList = data;
-        });
-        break;
-      case 'By_Alphabetic_Descending':
-        this.resevservice.get_desc_byalphabetic().subscribe(data => {
-          this.reservList.splice(0, this.reservList.length);
-          data.forEach(element => {
-            this.reservList.push(element);
+          break;
+        case 'By_Alphabetic_Descending':
+          this.resevservice.get_desc_byalphabetic().subscribe(data => {
+            this.reservList.splice(0, this.reservList.length);
+            data.forEach(element => {
+              this.reservList.push(element);
+            });
+            this.reservList = data;
           });
-          this.reservList = data;
-        });
-        break;
-      case 'By_Ranking':
-        this.resevservice.get_by_ranking().subscribe(data => {
-          this.reservList.splice(0, this.reservList.length);
-          data.forEach(element => {
-            this.reservList.push(element);
+          break;
+        case 'By_Ranking':
+          this.resevservice.get_by_ranking().subscribe(data => {
+            this.reservList.splice(0, this.reservList.length);
+            data.forEach(element => {
+              this.reservList.push(element);
+            });
+            this.reservList = data;
           });
-          this.reservList = data;
-        });
-        break;
+          break;
+      }
     }
+      catch(e)
+      {
+        this.toastr.error(e.message);
+      }    
   }
 
   vote(id: any, clasification: number): void {
 
-    this.resevservice.get_reservationById(id).subscribe(data => {
-      let info = data.reservationInfo;
-      let date = data.reservationDate;
-
-      if (data.votings == 0) {
-        this.reserv = new Reserv(data.reservationInfo, data.reservationDate, data.contactName, clasification, 1, data.iD_Reservation);
-        this.resevservice.update_reservation(this.reserv).subscribe(data => { });
-      }
-      else {
-        this.reserv = new Reserv(data.reservationInfo, data.reservationDate, data.contactName, (clasification + data.votings), ++data.voters, data.iD_Reservation);
-        this.resevservice.update_reservation(this.reserv).subscribe(data => { });
-      }
-    });
+    try{
+      this.resevservice.get_reservationById(id).subscribe(data => {
+        let info = data.reservationInfo;
+        let date = data.reservationDate;
+  
+        if (data.votings == 0) {
+          this.reserv = new Reserv(data.reservationInfo, data.reservationDate, data.contactName, clasification, 1, data.idReservation);
+          this.resevservice.update_reservation(this.reserv).subscribe(data => { });
+        }
+        else {
+          this.reserv = new Reserv(data.reservationInfo, data.reservationDate, data.contactName, (clasification + data.votings), ++data.voters, data.idReservation);
+          this.resevservice.update_reservation(this.reserv).subscribe(data => { });
+        }
+      });
+    }
+    catch(e)
+    {
+      this.toastr.error(e.message);
+    }
   }
   isyellow(id: any, place: number): boolean {
     let yellow: boolean = false;
     let idAsNumber: number = Number(id);
     this.reservList.forEach(element => {
-      if (element.iD_Reservation === idAsNumber) {
-        if (element.votings / element.voters >= place)
+      if (element.idReservation === idAsNumber) {
+        if (element.votings / element.voters -1 < place)
           yellow = true;
       }
     });

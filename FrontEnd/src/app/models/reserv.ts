@@ -1,18 +1,18 @@
-export class Reserv{
+export class Reserv{                     //Reservation model class 
     
-    iD_Reservation?: number;
+    idReservation?: number;
     reservationInfo: string;
     reservationDate: Date;
     contactName: string;
     votings: number;
     voters: number;
 
-    constructor (reservationInfo: string, reservationDate: Date, contactName: string,votings: number, voters: number, iD_Reservation?: number)
+    constructor (reservationInfo: string, reservationDate: Date, contactName: string,votings: number, voters: number, idReservation?: number)
     {        
         this.reservationInfo = reservationInfo;
         this.reservationDate = reservationDate;
         this.contactName = contactName;
-        this.iD_Reservation = iD_Reservation;
+        this.idReservation = idReservation;
         this.votings = votings;
         this.voters = voters;
     }

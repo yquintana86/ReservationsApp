@@ -15,142 +15,167 @@ namespace ReservationsBackEnd.Controllers
     [ApiController]
     public class ReservationsController : ControllerBase
     {
-        private readonly IReservationRepository _apprepository;
+        private readonly IUserReservationRepository _apprepository;             //Dependency Injection, it uses an instance of SqlUserReservationRepository
+                                                                                 
 
-        public ReservationsController(IReservationRepository reservation)
+        public ReservationsController(IUserReservationRepository apprepository)
         {
-            _apprepository = reservation;
+            _apprepository = apprepository;
         }
 
         // GET: api/Reservations
         [HttpGet]
         public ActionResult<IEnumerable<Reservation>> GetReservations()
         {
-            return _apprepository.GetReservations().Result.ToList();
+            try
+            {
+                return _apprepository.GetReservations().Result.ToList();
+            }
+
+            catch(Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);               
+            }
 
         }
 
         // GET: api/Reservations/5
         [HttpGet("{id}")]
-        public ActionResult<Reservation> GetReservation(int id)
+        public ActionResult<Reservation> GetReservation(int id)                     //Return the reservation with the given id in the DB
         {
-            var reserv = _apprepository.GetReservation(id);
-
-            if (reserv == null)
+            try
             {
-                return NotFound();
+                var reserv = _apprepository.GetReservation(id);
+                if (reserv == null)
+                {
+                    Response.StatusCode = 404;
+                    return new JsonResult("Not");
+                }
+
+                return reserv.Result;
             }
 
-            return reserv.Result;
+            catch (Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);               
+            }
         }
+            
 
         // PUT: api/Reservations/5
         [HttpPut("{id}")]
-        public IActionResult PutReservation(int id, Reservation reservation)
+        public IActionResult PutReservation(int id, Reservation reservation)            //Update the reservation in the DB
         {
-            if (id != reservation.ID_Reservation)
-            {
-                return BadRequest();
-            }
-
             try
             {
                 _apprepository.Update(reservation);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_apprepository.ReservationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return new JsonResult("ok");
             }
 
-            return NoContent();
+            catch (Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
+            }
+
+            
         }
 
         // POST: api/Reservations
         [HttpPost]
-        public ActionResult<Reservation> PostReservation(Reservation reservation)
+        public IActionResult PostReservation(Reservation reservation)            //Insert the reservation in the DB
         {
-            return _apprepository.Add(reservation);
+            try {
+                _apprepository.Add(reservation);
+                return new JsonResult("ok");
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
+            }
+
         }
 
         // GET: api/Reservations/ascendentbydate
         [HttpGet("ascendentbydate")]
-        [ProducesResponseType(typeof(IEnumerable<Reservation>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Reservation>), 200)]           //Return all the reservations ordered by date ascending
         public ActionResult<IEnumerable<Reservation>> Ascendentbydate()
         {
             try
             {
                 return _apprepository.GetByDateAsc().Result.ToList();
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
             }
         }
 
         // GET: api/Reservations/descendentbydate
         [HttpGet("descendentbydate")]
         [ProducesResponseType(typeof(IEnumerable<Reservation>), 200)]
-        public ActionResult<IEnumerable<Reservation>> Descendentbydate()
+        public ActionResult<IEnumerable<Reservation>> Descendentbydate()        //Return all the reservations ordered by date descending
         {
             try
             {
                 return _apprepository.GetByDateDesc().Result.ToList();
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
             }
         }
 
         // GET: api/Reservations/alphabeticacs
         [HttpGet("alphabeticacs")]
         [ProducesResponseType(typeof(IEnumerable<Reservation>), 200)]
-        public ActionResult<IEnumerable<Reservation>> Alphabeticacs()
+        public ActionResult<IEnumerable<Reservation>> Alphabeticacs()       //Return all the reservations ordered alphabetically ascending
         {
             try
             {
                 return _apprepository.GetByAlphabeticAsc().Result.ToList();
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
             }
         }
 
         // GET: api/Reservations/alphabeticdesc
         [HttpGet("alphabeticdesc")]
         [ProducesResponseType(typeof(IEnumerable<Reservation>), 200)]
-        public ActionResult<IEnumerable<Reservation>> Alphabeticdesc()
+        public ActionResult<IEnumerable<Reservation>> Alphabeticdesc()          //Return all the reservations ordered alphabetically descending
         {
             try
             {
                 return _apprepository.GetByAlphabeticDesc().Result.ToList();
             }
-            catch(Exception ex)
+            catch (Exception e)
             {
-                return BadRequest();
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
             }
         }
 
         // GET: api/Reservations/byranking
         [HttpGet("byranking")]
         [ProducesResponseType(typeof(IEnumerable<Reservation>), 200)]
-        public ActionResult<IEnumerable<Reservation>> Byranking()
+        public ActionResult<IEnumerable<Reservation>> Byranking()            //Return all the reservations ordered by ranking
         {
             try
             {
                 return _apprepository.GetByRanking().Result.ToList();
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);               
             }
         }
 

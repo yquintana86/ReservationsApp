@@ -23,18 +23,25 @@ export class EditReservationComponent implements OnInit {
   idReserv: any = '';
   voters: any = '';
   votings: any = '';
+  public minDate: Date;
+  public maxDate: Date;
 
   constructor(private userservice: UserService, private reservationservice: ReservationService, private contact: ContactTypeService
     , private toastr: ToastrService, newReservUserBuilder: FormBuilder, private router: ActivatedRoute) {
-
+    
+      //Initialize the FormGroup with all the values of the components and its validations
     this.newReservUserForm = this.newReservUserBuilder.group({
-      contactName: ['', [Validators.required, Validators.maxLength(8)]],
+      contactName: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(8), Validators.pattern("[A-Za-z0-9_-]{1,8}")]],
       contactTypeName: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(11)]],
-      birthDate: ['', [Validators.required]],
+      phoneNumber: '',
+      birthDate: [new Date(), [Validators.required]],
       reservationInfo: ''
     });
     this.contactTypeArray = new Array<ContactType>();
+
+    this.minDate = new Date();
+    this.maxDate = new Date();
+    this.minDate.setDate(this.minDate.getDate() - 54750);
   }
 
   ngOnInit(): void {
@@ -43,68 +50,102 @@ export class EditReservationComponent implements OnInit {
     this.load();
   }
 
-  loadContactSelect() {
-    this.contactTypeArray.splice(0, this.contactTypeArray.length);
-    this.contact.getContactTypes().subscribe(data => {
-      data.forEach(element => {
-        this.contactTypeArray.push(element);
+  loadContactSelect() {                   //Fill all the contactTypes options on the select component
+    try {
+      this.contactTypeArray.splice(0, this.contactTypeArray.length);
+      this.contact.getContactTypes().subscribe(data => {
+        data.forEach(element => {
+          this.contactTypeArray.push(element);
+        });
       });
-    });
+    }
+    catch (e) {
+      this.toastr.error(e.message);
+    }
 
   }
   load() {
     this.loadUser(this.router.snapshot.paramMap.get('name'));
     this.loadReserv(this.router.snapshot.paramMap.get('id'));
-
   }
 
-  loadUser(contactName: any) {
-    this.userservice.getUsersByContactName(contactName).subscribe(data => {
-      this.newReservUserForm.controls.contactName.setValue(data.contactName.toString());
-      this.newReservUserForm.controls.contactTypeName.setValue(data.contactTypeName.toString());
-      this.newReservUserForm.controls.phoneNumber.setValue(new Number(data.phoneNumber));
-      this.newReservUserForm.controls.birthDate.setValue(new Date(data.birthDate.toString()));
-    });
+  loadUser(contactName: any) {                  //Fill the contact type, phone number and birthdate of the user
+    try{
+      this.userservice.getUsersByContactName(contactName).subscribe(data => {
+        this.newReservUserForm.controls.contactName.setValue(data.contactName.toString());
+        this.newReservUserForm.controls.contactTypeName.setValue(data.contactTypeName.toString());
+        this.newReservUserForm.controls.phoneNumber.setValue(data.phoneNumber);
+        this.newReservUserForm.controls.birthDate.setValue(new Date(data.birthDate.toString()));
+      });
+    }
+    catch(e){
+      this.toastr.error(e.message);
+    }
   }
 
-  loadReserv(id: any) {
-    this.reservationservice.get_reservationById(id).subscribe(data => {
-      console.log(data);
-      this.idReserv = data.iD_Reservation;
-      this.voters = data.voters;
-      this.votings = data.votings;
-      this.newReservUserForm.controls.reservationInfo.setValue(data.reservationInfo);
-    });
+  loadReserv(id: any) {                         //Fill the text editor with the info 
+    try{
+      this.reservationservice.get_reservationById(id).subscribe(data => {
+        console.log(data);
+        this.idReserv = data.idReservation;
+        this.voters = data.voters;
+        this.votings = data.votings;
+        this.newReservUserForm.controls.reservationInfo.setValue(data.reservationInfo);
+      });
+    }
+    catch(e)
+    {
+      this.toastr.error(e);
+    }
   }
   updateReservation(): void {
     this.update_user();
     this.update_reserv();
   }
 
-  update_reserv(): void {
+  update_reserv(): void {             //Update the reservation 
     const reserv: Reserv = {
-      iD_Reservation: this.idReserv,
+      idReservation: this.idReserv,
       reservationDate: new Date(),
       contactName: this.newReservUserForm.get('contactName')?.value,
       reservationInfo: this.newReservUserForm.get('reservationInfo')?.value,
       voters: this.voters,
       votings: this.votings
     }
-    this.reservationservice.update_reservation(reserv).subscribe(data => {
-     this.toastr.success('Reservation Updated', 'The reservation was successfully updated');
-    });
+    try{
+      this.reservationservice.update_reservation(reserv).subscribe(data => {
+        this.toastr.success('Reservation Updated', 'The reservation was successfully updated');
+       });
+    }
+    catch(e)
+    {
+      this.toastr.error(e.message);
+    }
   }
 
-  update_user(): void {
+  update_user(): void {                       //Update the user 
     const user: User = {
       contactName: this.newReservUserForm.get('contactName')?.value,
       contactTypeName: this.newReservUserForm.get('contactTypeName')?.value,
       phoneNumber: this.newReservUserForm.get('phoneNumber')?.value,
       birthDate: this.newReservUserForm.get('birthDate')?.value
     }
-    this.userservice.updateuser(user).subscribe(data => {
-      
-    });
+      try{
+        this.userservice.updateuser(user).subscribe(data => {});
+      }
+      catch(e)
+      {
+        this.toastr.error(e.message);
+      }
+  }
+
+  preventNonNumericalInput(e:any):void {                         //Prevent users type non numbers in Firefox and more than 11 numbers
+    e = e || window.event;
+    var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
+    var charStr = String.fromCharCode(charCode);
+  
+    if (!charStr.match(/^[0-9]+$/) || this.newReservUserForm.get('phoneNumber')?.value.toString().length > 10)
+      e.preventDefault();
   }
 
 }

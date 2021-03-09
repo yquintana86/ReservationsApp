@@ -9,13 +9,15 @@ namespace ReservationDataAcces.Models
 {
     public class User
     {
+        //User Properties 
+
         [Key]
         [Column(TypeName = "varchar(8)")]
         public string ContactName { get; set; }
-        [Required]
+        [Required(AllowEmptyStrings = true)]
         [Column(TypeName = "varchar(11)")]
         public string PhoneNumber { get; set; }
-        [Required]        
+        [Required]
         public DateTime BirthDate { get; set; }
         [Required]
         public string ContactTypeName { get; set; }

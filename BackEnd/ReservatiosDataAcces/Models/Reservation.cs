@@ -9,12 +9,15 @@ namespace ReservationDataAcces.Models
 {
     public class Reservation
     {
+        //Reservation Properties 
+
         [Key]
-        public int ID_Reservation { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int IDReservation { get; set; }
         [Required]
         public string ReservationInfo { get; set; }
         [Required]
-        public DateTime Fecha_Reservacion { get; set; }
+        public DateTime ReservationDate { get; set; }
         public int Votings { get; set; }
         public int Voters { get; set; }
         [Required]

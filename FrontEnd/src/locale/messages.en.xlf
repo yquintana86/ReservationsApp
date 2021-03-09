@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="5911533499421463689" datatype="html">
+        <source> Reservations List </source>
+        <target>Reservations List</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8720015795143287337" datatype="html">
+        <source> Lorem ipsum dolor sit amet, consectetur adipicising elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </source>
+        <target>Lorem ipsum dolor sit amet, consectetur adipicising elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">10,13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">10,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="510596125285520744" datatype="html">
+        <source>Contact Name...</source>
+        <target>Contact Name...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3650308582803584730" datatype="html">
+        <source>The contact name should has less than 8 characters and without any space characters</source>
+        <target>The contact name should has less than 8 characters and without any space characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6824043927034149175" datatype="html">
+        <source> You should enter less than 8 characters and without any space characters </source>
+        <target>You should enter less than 8 characters and without any space characters</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">37,38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4291528949775088469" datatype="html">
+        <source> You must select one contact type </source>
+        <target>You must select one contact type</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">58,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3385726498089118289" datatype="html">
+        <source>The Phone should contain between three and eleven numbers</source>
+        <target>The Phone should contain between three and eleven numbers</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6250142329178814676" datatype="html">
+        <source>Phone...</source>
+        <target>Phone...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4855910003030388785" datatype="html">
+        <source> it must contain between three and eight numbers </source>
+        <target>it must contain between three and eight numbers</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8173261622014082209" datatype="html">
+        <source> You must enter a date </source>
+        <target>You must enter a date</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">102,103</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">100,101</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7845324081198900071" datatype="html">
+        <source>SEND</source>
+        <target>SEND</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/edit-reservation/edit-reservation.component.html</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="593182655305490559" datatype="html">
+        <source> CREATE RESERVATION</source>
+        <target>CREATE RESERVATION</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3104055680056509182" datatype="html">
+        <source>By Date Ascending</source>
+        <target>By Date Ascending</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="576964777481174978" datatype="html">
+        <source>By Date Descending</source>
+        <target>By Date Descending</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4889640335454731330" datatype="html">
+        <source>By Alphabetic Ascending</source>
+        <target>By Alphabetic Ascending</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4787393850940497824" datatype="html">
+        <source>By Alphabetic Descending</source>
+        <target>By Alphabetic Descending</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1991031137915703509" datatype="html">
+        <source>By Ranking</source>
+        <target>By Ranking</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1953440859419993232" datatype="html">
+        <source> Ranking </source>
+        <target>Ranking</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">62,63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="654637767564812879" datatype="html">
+        <source>Add Favorite</source>
+        <target>Add Favorite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1571190680532015078" datatype="html">
+        <source>EDIT</source>
+        <target>EDIT</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/list-reservation/list-reservation.component.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6107857851402384677" datatype="html">
+        <source> Create Reservation </source>
+        <target>Create Reservation</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4903181136131358869" datatype="html">
+        <source>Bitrh Date</source>
+        <target>Bitrh Date</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/reservations/new-reservation/new-reservation.component.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

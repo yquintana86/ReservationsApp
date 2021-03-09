@@ -11,83 +11,91 @@ using ReservatiosDataAcces.Models;
 
 namespace ReservationsBackEnd.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _apprepository;
+        private readonly IUserReservationRepository _apprepository;        //Dependency Injection, it uses an instance of SqlAppRepository
 
-        public UserController(IUserRepository user)
+        public UserController(IUserReservationRepository apprepository)
         {
-            this._apprepository = user;
+            this._apprepository = apprepository;
         }
 
         // GET: api/User
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<User>), 200)]
-        public ActionResult<IEnumerable<User>> GetUsers()
+        public ActionResult<IEnumerable<User>> GetUsers()               //Returns all the users in the DB
         {
-            return _apprepository.GetUsers().Result.ToList();
+            try
+            {
+                return _apprepository.GetUsers().Result.ToList();
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);               
+            }
         }
 
-        // GET: api/User/5
-        [HttpGet("{contact_name}")]
+        // GET: api/User/contactName
+        [HttpGet("{contactName}")]
         [ProducesResponseType(typeof(User), 200)]
-        public ActionResult<User> GetUser(string contact_name)
+        public ActionResult<User> GetUser(string contactName)           //Returns a user with the given contactName in the DB
         {
-            var contact = _apprepository.GetUser(contact_name);
-
-            if (contact == null)
+            try
             {
-                return NotFound();
-            }
+                var contact = _apprepository.GetUser(contactName);
 
-            return contact.Result;
+                if (contact == null)
+                {
+                    Response.StatusCode = 404;
+                    return new JsonResult("User Not Found");
+                }
+
+                return contact.Result;
+            }
+            catch (Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
+            }
         }
 
-        // PUT: api/User/5
-        [HttpPut("{contact_name}")]
-        public IActionResult PutUser(string contact_name, User user)
+        // PUT: api/User/contactName
+        [HttpPut("{contactName}")]
+        public IActionResult PutUser(string contactName, User user)     //Update the user with the given contactName in the DB
         {
-            if (contact_name != user.ContactName)
-            {
-                return BadRequest();
-            }
-
             try
             {
                 _apprepository.Update(user);
+                return new JsonResult("ok");
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!_apprepository.UserExists(contact_name))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
+            }            
         }
-
 
         // POST: api/User
         [HttpPost]
-        public ActionResult<User> PostUser(User user)
+        public IActionResult PostUser(User user)                    //Insert the new user in the DB
         {
-            return _apprepository.Add(user);
+            try
+            {
+                _apprepository.Add(user);
+                return new JsonResult("ok");
+            }
+            catch(Exception e)
+            {
+                Response.StatusCode = 505;
+                throw new Exception(e.InnerException.Message);                
+            }
+             
         }
-
-        //Get: api/User/exist
-        [HttpGet("exist")]
-        [ProducesResponseType(typeof(string), 200)]
-        public ActionResult<bool> Exist(string contactName)
-        {
-            return _apprepository.UserExists(contactName);
-        }
+        
 
 
     }

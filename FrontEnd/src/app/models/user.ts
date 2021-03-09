@@ -1,12 +1,12 @@
-export class User
+export class User               //User model class 
 {
     contactName: string;
-    phoneNumber: number;
+    phoneNumber: string;
     birthDate : Date;
     contactTypeName: string;
     
     
-    constructor(contactName: string, phoneNumber: number,birthDate : Date, contactTypeName: string)
+    constructor(contactName: string, phoneNumber: string,birthDate : Date, contactTypeName: string)
     {
         this.contactName = contactName;
         this.phoneNumber = phoneNumber;
