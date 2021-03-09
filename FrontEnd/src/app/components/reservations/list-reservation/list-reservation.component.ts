@@ -18,10 +18,10 @@ export class ListReservationComponent implements OnInit {
   public selectedFilter: any;
   idReserv: any;
   reserv: Reserv;
-  pag:number = 1;
+  pag: number = 1;
 
 
-  constructor(public resevservice: ReservationService, public favoriteservice: FavoriteService,private toastr: ToastrService) {
+  constructor(public resevservice: ReservationService, public favoriteservice: FavoriteService, private toastr: ToastrService) {
     this.reservList = new Array<Reserv>();
     this.isFavArray = new Array<number>();
     this.cantReserv = this.reservList.length;
@@ -30,23 +30,22 @@ export class ListReservationComponent implements OnInit {
 
   ngOnInit() {
 
-    try{
+    try {
       this.resevservice.get_reservation().subscribe((data) => {
         this.reservList = data as Array<Reserv>;
       });
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
 
   onfavorite(idreserv: any) {
     this.changeclass(idreserv);
-    if(typeof(Storage) !== 'undefined')    
+    if (typeof (Storage) !== 'undefined')
       this.favoriteservice.setlocalstorage(idreserv);
-    
-    
+
+
   }
 
   isfavorite(id: any): boolean {
@@ -58,7 +57,7 @@ export class ListReservationComponent implements OnInit {
   }
 
   filtrar(id: any): void {
-    try{
+    try {
       switch (id.target.value) {
         case 'By_Date_Ascending':
           this.resevservice.get_asc_bydate().subscribe(data => {
@@ -107,19 +106,18 @@ export class ListReservationComponent implements OnInit {
           break;
       }
     }
-      catch(e)
-      {
-        this.toastr.error(e.message);
-      }    
+    catch (e) {
+      this.toastr.error(e.message);
+    }
   }
 
   vote(id: any, clasification: number): void {
 
-    try{
+    try {
       this.resevservice.get_reservationById(id).subscribe(data => {
         let info = data.reservationInfo;
         let date = data.reservationDate;
-  
+
         if (data.votings == 0) {
           this.reserv = new Reserv(data.reservationInfo, data.reservationDate, data.contactName, clasification, 1, data.idReservation);
           this.resevservice.update_reservation(this.reserv).subscribe(data => { });
@@ -130,8 +128,7 @@ export class ListReservationComponent implements OnInit {
         }
       });
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
@@ -140,7 +137,7 @@ export class ListReservationComponent implements OnInit {
     let idAsNumber: number = Number(id);
     this.reservList.forEach(element => {
       if (element.idReservation === idAsNumber) {
-        if (element.votings / element.voters -1 < place)
+        if (element.votings / element.voters - 1 < place)
           yellow = true;
       }
     });

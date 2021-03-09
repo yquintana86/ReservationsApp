@@ -15,7 +15,7 @@ export class ReservationService {           //This class has all the CRUD and so
 
   constructor(private http: HttpClient) { }
 
-  public save_reservation(reserv: Reserv): Observable<Reserv> {
+  public save_reservation(reserv: Reserv): Observable<any> {
     return this.http.post<Reserv>(this.myAppUrl, reserv);
   }
 
@@ -26,7 +26,7 @@ export class ReservationService {           //This class has all the CRUD and so
     return this.http.get<Reserv>(this.myAppUrl + id);
   }
 
-  public update_reservation(reserv: Reserv): Observable<Reserv> {
+  public update_reservation(reserv: Reserv): Observable<any> {
     return this.http.put<Reserv>(this.myAppUrl + reserv.idReservation, reserv).pipe(
       catchError(this.handleError)
     );

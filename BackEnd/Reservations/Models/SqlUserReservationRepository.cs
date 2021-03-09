@@ -50,8 +50,7 @@ namespace ReservationsBackEnd.Models
         {
             try
             {
-                _context.Reservations.Add(reservation);
-                Thread.Sleep(500);
+                _context.Reservations.Add(reservation);               
                 _context.SaveChanges();
             }
             catch (Exception ex)

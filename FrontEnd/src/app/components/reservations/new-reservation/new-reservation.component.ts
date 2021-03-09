@@ -29,7 +29,7 @@ export class NewReservationComponent implements OnInit {
   constructor(private userservice: UserService, private reservationservice: ReservationService, private contact: ContactTypeService
     , private toastr: ToastrService, newReservUserBuilder: FormBuilder) {
 
-      //Initialize the FormGroup with all the values of the components and its validations
+    //Initialize the FormGroup with all the values of the components and its validations
     this.newReservUserForm = this.newReservUserBuilder.group({
       contactName: ['', [Validators.required, Validators.maxLength(8), Validators.pattern("[A-Za-z0-9_-]{1,8}")]],
       contactTypeName: ['', [Validators.required]],
@@ -37,7 +37,7 @@ export class NewReservationComponent implements OnInit {
       birthDate: ['', [Validators.required]],
       reservationInfo: ''
     });
-    
+
     this.contactTypeArray = new Array<ContactType>();
 
     this.minDate = new Date();
@@ -51,7 +51,7 @@ export class NewReservationComponent implements OnInit {
   }
 
   loadContactSelect() {                     //Fill all the contactTypes options on the select component 
-    try{
+    try {
       this.contactTypeArray.splice(0, this.contactTypeArray.length);
       this.contact.getContactTypes().subscribe(data => {
         data.forEach(element => {
@@ -59,13 +59,12 @@ export class NewReservationComponent implements OnInit {
         });
       });
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
 
-saveReservation(): void {         // Choose between update a user with a new reservation or save a new user and its reservation 
+  saveReservation(): void {         // Choose between update a user with a new reservation or save a new user and its reservation 
 
     this.userservice.getUsersByContactName(this.newReservUserForm.get('contactName')?.value).subscribe(data => {
       if (data) {
@@ -79,20 +78,20 @@ saveReservation(): void {         // Choose between update a user with a new res
     });
   }
 
-  save_reserv(): void {                   //Save a reservation
+  save_reserv(): void {                   //Save a reservation    
     const reserv: Reserv = {
       reservationDate: new Date(),
       contactName: this.newReservUserForm.get('contactName')?.value,
-      reservationInfo: this.newReservUserForm.get('reservationInfo')?.value,
+      reservationInfo: (this.newReservUserForm.get('reservationInfo')?.value == '') ? '<p> </p>'
+        : this.newReservUserForm.get('reservationInfo')?.value,
       voters: 1,
       votings: 0
     }
-    try{
-      this.reservationservice.save_reservation(reserv).subscribe(data => {});
+    try {
+      this.reservationservice.save_reservation(reserv).subscribe(data => { });
       this.newReservUserForm.reset();
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
@@ -100,17 +99,16 @@ saveReservation(): void {         // Choose between update a user with a new res
   save_user(): void {                                                  //Save User                 
     const user: User = {
       contactName: this.newReservUserForm.get('contactName')?.value,
-      contactTypeName: this.newReservUserForm.get('contactTypeName')?.value,      
-      phoneNumber: this.newReservUserForm.get('phoneNumber')?.value,
+      contactTypeName: this.newReservUserForm.get('contactTypeName')?.value,
+      phoneNumber: (this.newReservUserForm.get('phoneNumber')?.value) ?? '',
       birthDate: this.newReservUserForm.get('birthDate')?.value
     }
-    try{
+    try {
       this.userservice.saveUser(user).subscribe(data => {
         this.toastr.success('Reservation Saved', 'The reservation was successfully saved');
       })
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
@@ -119,52 +117,56 @@ saveReservation(): void {         // Choose between update a user with a new res
     const user: User = {
       contactName: this.newReservUserForm.get('contactName')?.value,
       contactTypeName: this.newReservUserForm.get('contactTypeName')?.value,
-      phoneNumber: this.newReservUserForm.get('phoneNumber')?.value,
+      phoneNumber: (this.newReservUserForm.get('phoneNumber')?.value) ?? '',
       birthDate: this.newReservUserForm.get('birthDate')?.value
     }
-    try{
+    try {
       this.userservice.updateuser(user).subscribe(data => {
         this.toastr.success('Reservation Saved', 'The reservation was successfully saved');
       })
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
 
   public checkExistency() {     //Auto fill the contact type, phone number and birthdate
-    try
-    {
+    try {
       let conctact: string = this.newReservUserForm.get('contactName')?.value;
-    if (conctact.length > 3) {
-      this.userservice.getUsersByContactName(conctact).subscribe(data => {
-        if (data) {
-          this.newReservUserForm.controls.contactTypeName.setValue(data.contactTypeName.toString());
-          this.newReservUserForm.controls.phoneNumber.setValue(data.phoneNumber);
-          this.newReservUserForm.controls.birthDate.setValue(new Date(data.birthDate.toString()));
-        }
-        else {
-          this.newReservUserForm.controls.phoneNumber.setValue('');
-          this.newReservUserForm.controls.birthDate.setValue(new Date());
-        }
-      });     
-    }    
+      if (conctact.length > 3) {
+        this.userservice.getUsersByContactName(conctact).subscribe(data => {
+          if (data) {
+            this.newReservUserForm.controls.contactTypeName.setValue(data.contactTypeName.toString());
+            this.newReservUserForm.controls.phoneNumber.setValue(data.phoneNumber);
+            this.newReservUserForm.controls.birthDate.setValue(new Date(data.birthDate.toString()));
+          }
+          else {
+            this.newReservUserForm.controls.phoneNumber.setValue('');
+            this.newReservUserForm.controls.birthDate.setValue(new Date());
+          }
+        });
+      }
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
-    }
+  }
 
-     preventNonNumericalInput(e:any):void {                         //Prevent users type non numbers in Firefox 
-      e = e || window.event;
-      var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
-      var charStr = String.fromCharCode(charCode);      
-      if (!charStr.match(/^[0-9]+$/) || this.newReservUserForm.get('phoneNumber')?.value.toString().length > 10)
-        e.preventDefault();
+  preventNonNumericalInput(e: any): void {                         //Prevent users type non numbers in Firefox 
+    e = e || window.event;
+    var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
+    var charStr = String.fromCharCode(charCode);
+    if (!charStr.match(/^[0-9]+$/))
+      e.preventDefault();
+    else {
+      if (!this.newReservUserForm.get('phoneNumber')?.value)
+        return;
+      else
+        if (this.newReservUserForm.get('phoneNumber')?.value.toString().length > 10)
+          e.preventDefault();
     }
   }
+}
 
 
 

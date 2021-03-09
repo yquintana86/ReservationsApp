@@ -28,10 +28,10 @@ export class EditReservationComponent implements OnInit {
 
   constructor(private userservice: UserService, private reservationservice: ReservationService, private contact: ContactTypeService
     , private toastr: ToastrService, newReservUserBuilder: FormBuilder, private router: ActivatedRoute) {
-    
-      //Initialize the FormGroup with all the values of the components and its validations
+
+    //Initialize the FormGroup with all the values of the components and its validations
     this.newReservUserForm = this.newReservUserBuilder.group({
-      contactName: ['', [Validators.required,Validators.minLength(3), Validators.maxLength(8), Validators.pattern("[A-Za-z0-9_-]{1,8}")]],
+      contactName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(8), Validators.pattern("[A-Za-z0-9_-]{1,8}")]],
       contactTypeName: ['', [Validators.required]],
       phoneNumber: '',
       birthDate: [new Date(), [Validators.required]],
@@ -70,7 +70,7 @@ export class EditReservationComponent implements OnInit {
   }
 
   loadUser(contactName: any) {                  //Fill the contact type, phone number and birthdate of the user
-    try{
+    try {
       this.userservice.getUsersByContactName(contactName).subscribe(data => {
         this.newReservUserForm.controls.contactName.setValue(data.contactName.toString());
         this.newReservUserForm.controls.contactTypeName.setValue(data.contactTypeName.toString());
@@ -78,13 +78,13 @@ export class EditReservationComponent implements OnInit {
         this.newReservUserForm.controls.birthDate.setValue(new Date(data.birthDate.toString()));
       });
     }
-    catch(e){
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
 
   loadReserv(id: any) {                         //Fill the text editor with the info 
-    try{
+    try {
       this.reservationservice.get_reservationById(id).subscribe(data => {
         console.log(data);
         this.idReserv = data.idReservation;
@@ -93,8 +93,7 @@ export class EditReservationComponent implements OnInit {
         this.newReservUserForm.controls.reservationInfo.setValue(data.reservationInfo);
       });
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e);
     }
   }
@@ -108,17 +107,17 @@ export class EditReservationComponent implements OnInit {
       idReservation: this.idReserv,
       reservationDate: new Date(),
       contactName: this.newReservUserForm.get('contactName')?.value,
-      reservationInfo: this.newReservUserForm.get('reservationInfo')?.value,
+      reservationInfo: (this.newReservUserForm.get('reservationInfo')?.value == '') ? '<p> </p>'
+        : this.newReservUserForm.get('reservationInfo')?.value,
       voters: this.voters,
       votings: this.votings
     }
-    try{
+    try {
       this.reservationservice.update_reservation(reserv).subscribe(data => {
         this.toastr.success('Reservation Updated', 'The reservation was successfully updated');
-       });
+      });
     }
-    catch(e)
-    {
+    catch (e) {
       this.toastr.error(e.message);
     }
   }
@@ -127,25 +126,30 @@ export class EditReservationComponent implements OnInit {
     const user: User = {
       contactName: this.newReservUserForm.get('contactName')?.value,
       contactTypeName: this.newReservUserForm.get('contactTypeName')?.value,
-      phoneNumber: this.newReservUserForm.get('phoneNumber')?.value,
+      phoneNumber: (this.newReservUserForm.get('phoneNumber')?.value) ?? '',
       birthDate: this.newReservUserForm.get('birthDate')?.value
     }
-      try{
-        this.userservice.updateuser(user).subscribe(data => {});
-      }
-      catch(e)
-      {
-        this.toastr.error(e.message);
-      }
+    try {
+      this.userservice.updateuser(user).subscribe(data => { });
+    }
+    catch (e) {
+      this.toastr.error(e.message);
+    }
   }
 
-  preventNonNumericalInput(e:any):void {                         //Prevent users type non numbers in Firefox and more than 11 numbers
+  preventNonNumericalInput(e: any): void {                         //Prevent users type non numbers in Firefox 
     e = e || window.event;
     var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
     var charStr = String.fromCharCode(charCode);
-  
-    if (!charStr.match(/^[0-9]+$/) || this.newReservUserForm.get('phoneNumber')?.value.toString().length > 10)
+    if (!charStr.match(/^[0-9]+$/))
       e.preventDefault();
+    else {
+      if (!this.newReservUserForm.get('phoneNumber')?.value)
+        return;
+      else
+        if (this.newReservUserForm.get('phoneNumber')?.value.toString().length > 10)
+          e.preventDefault();
+    }
   }
 
 }
